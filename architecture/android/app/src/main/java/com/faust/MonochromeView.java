@@ -1,4 +1,4 @@
-package com.sfIter;
+package com.faust;
 
 import android.content.Context;
 import android.graphics.Canvas;
