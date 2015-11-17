@@ -39,4 +39,5 @@ public class dsp_faustJNI {
     public final static native void propagateGyr(int jarg1, float jarg2);
     public final static native void setGyrConverter(int p, int gyr, int curve, float amin, float amid, float amax);
     public final static native float getCPULoad();
+    public final static native int getScreenColor();
 }
