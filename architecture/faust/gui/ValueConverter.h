@@ -512,13 +512,20 @@ class ZoneReader
 
 
 // compute an rgb color from 3 zoneredears
-static int zones2color(ZoneReader* z1, ZoneReader* z2, ZoneReader* z3)
+static int convert3zones2color(ZoneReader* z1, ZoneReader* z2, ZoneReader* z3)
 {
-    int r = (z1) ? z1->getValue() : 127;
-    int g = (z2) ? z2->getValue() : 127;
-    int b = (z3) ? z3->getValue() : 127;
+    if (z1 || z2 || z3) {
 
-    return (r<<16) | (g<<8) | b;
+        int r = (z1) ? z1->getValue() : 127;
+        int g = (z2) ? z2->getValue() : 127;
+        int b = (z3) ? z3->getValue() : 127;
+
+        return (r<<16) | (g<<8) | b;
+
+    } else {
+        
+        return -1;
+    }
 }
 
 #endif

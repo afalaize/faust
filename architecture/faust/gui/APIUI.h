@@ -33,15 +33,10 @@ class APIUI : public PathUI, public Meta
 
         // Screen color control
         // "...[screencolor:red]..." etc.
-        boolean                 fHasScreenControl;      // true if control screen color
-        FAUSTFLOAT*             fScreenRedZone;         // point to zone that controls red component of screen color
-        FAUSTFLOAT*             fScreenGreenZone;       // point to zone that controls red component of screen color
-        FAUSTFLOAT*             fScreenBlueZone;        // point to zone that controls red component of screen color
-        ValueConverter*         fScreenRedConverter;
-        ValueConverter*         fScreenGreenConverter;
-        ValueConverter*         fScreenBlueConverter;
-
-        int                     fScreenColor;       // current screen color
+        boolean                 fHasScreenControl;      // true if control screen color metadata
+        ZoneReader*             fRedReader;
+        ZoneReader*             fGreenReader;
+        ZoneReader*             fBlueReader;
 
         // Current values controlled by metadata
         string	fCurrentUnit;
@@ -118,11 +113,20 @@ class APIUI : public PathUI, public Meta
 
             // handle screencolor metadata "...[screencolor:red|green|blue]..."
             if (fCurrentColor.size() > 0) {
-                if (fCurrentColor == "red")
-                    case /* value */:
+                if ((fCurrentColor == "red") && (fRedReader == 0)) {
+                    fRedReader = new ZoneReader(zone, min, max);
+                    fHasScreenControl = true;
+                } else if ((fCurrentColor == "green") && (fGreenReader == 0)) {
+                    fGreenReader = new ZoneReader(zone, min, max);
+                    fHasScreenControl = true;
+                } else if ((fCurrentColor == "red") && (fBlueReader == 0)) {
+                    fBlueReader = new ZoneReader(zone, min, max);
+                    fHasScreenControl = true;
+                } else
+                    cerr << "incorrect screencolor metadata : " << fCurrentColor << endl;
                 }
-
             }
+            fCurrentColor = "";
         }
 
         int getAccZoneIndex(int p, int acc)
@@ -349,6 +353,13 @@ class APIUI : public PathUI, public Meta
         void setGyrConverter(int p, int gyr, int curve, double amin, double amid, double amax) {}
 
         void getGyrConverter(int p, int& gyr, int& curve, double& amin, double& amid, double& amax) {}
+
+        // getScreenColor() : -1 means no screen color control (no screencolor metadata found)
+        // otherwise return 0x00RRGGBB a ready to use color
+        int getScreenColor()
+        {
+            return convert3zones2color(fRedReader, fGreenReader, fBlueReader);
+        }
 
 };
 
