@@ -33,7 +33,7 @@ class APIUI : public PathUI, public Meta
 
         // Screen color control
         // "...[screencolor:red]..." etc.
-        boolean                 fHasScreenControl;      // true if control screen color metadata
+        bool                    fHasScreenControl;      // true if control screen color metadata
         ZoneReader*             fRedReader;
         ZoneReader*             fGreenReader;
         ZoneReader*             fBlueReader;
@@ -122,7 +122,7 @@ class APIUI : public PathUI, public Meta
                 } else if ((fCurrentColor == "red") && (fBlueReader == 0)) {
                     fBlueReader = new ZoneReader(zone, min, max);
                     fHasScreenControl = true;
-                } else
+                } else {
                     cerr << "incorrect screencolor metadata : " << fCurrentColor << endl;
                 }
             }
@@ -140,7 +140,9 @@ class APIUI : public PathUI, public Meta
 
      public:
 
-        APIUI() : fNumParameters(0) {}
+        APIUI() : fNumParameters(0), fHasScreenControl(false), fRedReader(0), fGreenReader(0), fBlueReader(0) 
+        {}
+
         virtual ~APIUI()
         {
             vector<ValueConverter*>::iterator it1;
@@ -358,8 +360,20 @@ class APIUI : public PathUI, public Meta
         // otherwise return 0x00RRGGBB a ready to use color
         int getScreenColor()
         {
-            return convert3zones2color(fRedReader, fGreenReader, fBlueReader);
+            if (fHasScreenControl) {
+
+                int r = (fRedReader) ? fRedReader->getValue() : 127;
+                int g = (fGreenReader) ? fGreenReader->getValue() : 127;
+                int b = (fBlueReader) ? fBlueReader->getValue() : 127;
+
+                return (r<<16) | (g<<8) | b;
+
+            } else {
+
+                return -1;
+            }
         }
+
 
 };
 
