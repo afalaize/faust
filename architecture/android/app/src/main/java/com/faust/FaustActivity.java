@@ -79,7 +79,7 @@ public class FaustActivity extends Activity {
 	private ParametersInfo parametersInfo = new ParametersInfo();
     private long lastUIDate;
     private WifiManager.MulticastLock lock;
-    private boolean fBuildUI = false;
+    private boolean fBuildUI = (dsp_faust.getScreenColor()<0);
     private MonochromeView fMonoView;
 
     /**
@@ -200,7 +200,9 @@ public class FaustActivity extends Activity {
                 dsp_faust.propagateAcc(0, se.values[0]);
                 dsp_faust.propagateAcc(1, se.values[1]);
                 dsp_faust.propagateAcc(2, se.values[2]);
-                updatecolor(se.values[0], se.values[1], se.values[2]);
+                if (!fBuildUI) {
+					updatecolor(se.values[0], se.values[1], se.values[2]);
+				}
             }
 
             if (se.sensor.getType() == Sensor.TYPE_GYROSCOPE) {

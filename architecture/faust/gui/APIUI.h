@@ -140,7 +140,7 @@ class APIUI : public PathUI, public Meta
 
      public:
 
-        APIUI() : fNumParameters(0), fHasScreenControl(false), fRedReader(0), fGreenReader(0), fBlueReader(0) 
+        APIUI() : fNumParameters(0), fHasScreenControl(false), fRedReader(0), fGreenReader(0), fBlueReader(0)
         {}
 
         virtual ~APIUI()
@@ -360,6 +360,7 @@ class APIUI : public PathUI, public Meta
         // otherwise return 0x00RRGGBB a ready to use color
         int getScreenColor()
         {
+            return -1;
             if (fHasScreenControl) {
 
                 int r = (fRedReader) ? fRedReader->getValue() : 127;

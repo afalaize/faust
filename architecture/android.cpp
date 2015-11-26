@@ -239,6 +239,14 @@ struct AndroidEngine {
     }
 
     float getCPULoad() { return fDriver->getCPULoad(); }
+
+    int getScreenColor()
+    {
+        int c = fAPIUI.getScreenColor();
+        __android_log_print(ANDROID_LOG_ERROR, "Faust", "getScreenColor() = %x", c);
+        return c;
+    }
+
 };
 
 static AndroidEngine* gGlobal = NULL;
@@ -468,7 +476,7 @@ float getCPULoad()
  * c <  0 : no screen color requested (keep regular UI)
  * c >= 0 : requested color (no UI but a colored screen)
  */
- void getScreenColor()
+ int getScreenColor()
  {
      //__android_log_print(ANDROID_LOG_ERROR, "Faust", "setAccConverter %d %d %d %f %f %f", p, acc, curve, amin, amid, amax);
      return gGlobal->getScreenColor();

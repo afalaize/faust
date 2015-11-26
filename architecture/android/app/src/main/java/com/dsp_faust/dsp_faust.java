@@ -15,7 +15,7 @@ public class dsp_faust {
     dsp_faustJNI.init(arg0, arg1);
   }
 
-  public static int start() {
+  public static boolean start() {
     Log.d("FaustJava", "JNI start");
     return dsp_faustJNI.start();
   }
@@ -100,6 +100,5 @@ public class dsp_faust {
   public static int getScreenColor() {
      return dsp_faustJNI.getScreenColor();
   }
-    
 
 }
