@@ -54,8 +54,15 @@ public class MonochromeView extends View
         }
     }
 
+    public void setColor(int c) {
+        fRed    = 255 & (c >> 16);
+        fGreen  = 255 & (c >> 8);
+        fBlue   = 255 & (c >> 0);
+        invalidate();
+    }
+
     protected void onDraw (Canvas canvas) {
-        Log.d("FaustJava", "MonochromeView.onDraw() "+ "width:" +getWidth()+ " height:"+ getHeight());
+        //Log.d("FaustJava", "MonochromeView.onDraw() "+ "width:" +getWidth()+ " height:"+ getHeight());
         canvas.drawRGB(fRed, fGreen, fBlue);
     }
 }
