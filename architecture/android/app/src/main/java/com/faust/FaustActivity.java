@@ -48,6 +48,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -80,7 +81,7 @@ public class FaustActivity extends Activity {
     private long lastUIDate;
     private WifiManager.MulticastLock lock;
     private boolean fBuildUI;
-    
+
     private MonochromeView fMonoView;
 
     /**
@@ -132,7 +133,7 @@ public class FaustActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d("FaustJava", "onCreate");
-      
+
         if (!dsp_faust.isRunning()) {
 
             WifiManager wifi = (WifiManager)getSystemService( Context.WIFI_SERVICE );
@@ -147,10 +148,11 @@ public class FaustActivity extends Activity {
             dsp_faust.init(44100,512);
             Osc.startListening();
         }
-        
+
         fBuildUI = (dsp_faust.getScreenColor()<0);
         if (!fBuildUI) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
         super.onCreate(savedInstanceState);
         if (fBuildUI) {
@@ -176,10 +178,6 @@ public class FaustActivity extends Activity {
         } else {
             Log.d("FaustJava", "Don't create User Interface");
             toggleHideyBar();
-            // controle de la couleur ???
-            // ne marche pas ! getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-
-
         }
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -189,6 +187,10 @@ public class FaustActivity extends Activity {
         fMonoView.setRed(x/10.0);
         fMonoView.setGreen(y/10.0);
         fMonoView.setBlue(z/10.0);
+    }
+
+    private void updatecolor2(int c) {
+        fMonoView.setColor(c);
     }
 
     private final SensorEventListener mSensorListener = new SensorEventListener() {
@@ -204,7 +206,7 @@ public class FaustActivity extends Activity {
                 dsp_faust.propagateAcc(1, se.values[1]);
                 dsp_faust.propagateAcc(2, se.values[2]);
                 if (!fBuildUI) {
-					updatecolor(se.values[0], se.values[1], se.values[2]);
+					fMonoView.setColor(dsp_faust.getScreenColor());
 				}
             }
 
