@@ -360,17 +360,12 @@ class APIUI : public PathUI, public Meta
         // otherwise return 0x00RRGGBB a ready to use color
         int getScreenColor()
         {
-            return -1;
             if (fHasScreenControl) {
-
                 int r = (fRedReader) ? fRedReader->getValue() : 127;
                 int g = (fGreenReader) ? fGreenReader->getValue() : 127;
                 int b = (fBlueReader) ? fBlueReader->getValue() : 127;
-
                 return (r<<16) | (g<<8) | b;
-
             } else {
-
                 return -1;
             }
         }

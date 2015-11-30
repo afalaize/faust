@@ -79,7 +79,8 @@ public class FaustActivity extends Activity {
 	private ParametersInfo parametersInfo = new ParametersInfo();
     private long lastUIDate;
     private WifiManager.MulticastLock lock;
-    private boolean fBuildUI = (dsp_faust.getScreenColor()<0);
+    private boolean fBuildUI;
+    
     private MonochromeView fMonoView;
 
     /**
@@ -131,17 +132,7 @@ public class FaustActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d("FaustJava", "onCreate");
-        if (!fBuildUI) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-        }
-        super.onCreate(savedInstanceState);
-        if (fBuildUI) {
-            setContentView(R.layout.main);
-        } else {
-            fMonoView = new MonochromeView(getApplicationContext());
-            setContentView(fMonoView);
-        }
-
+      
         if (!dsp_faust.isRunning()) {
 
             WifiManager wifi = (WifiManager)getSystemService( Context.WIFI_SERVICE );
@@ -155,6 +146,18 @@ public class FaustActivity extends Activity {
             Log.d("FaustJava", "onCreate : OSC In Port " + oscPortNumber);
             dsp_faust.init(44100,512);
             Osc.startListening();
+        }
+        
+        fBuildUI = (dsp_faust.getScreenColor()<0);
+        if (!fBuildUI) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+        }
+        super.onCreate(savedInstanceState);
+        if (fBuildUI) {
+            setContentView(R.layout.main);
+        } else {
+            fMonoView = new MonochromeView(getApplicationContext());
+            setContentView(fMonoView);
         }
 
         numberOfParameters = dsp_faust.getParamsCount();

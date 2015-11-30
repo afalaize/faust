@@ -20,7 +20,7 @@ public class dsp_faustJNI {
     }
 
     public final static native void init(int jarg1, int jarg2);
-    public final static native int start();
+    public final static native boolean start();
     public final static native void stop();
     public final static native void destroy();
     public final static native boolean isRunning();

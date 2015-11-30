@@ -243,7 +243,7 @@ struct AndroidEngine {
     int getScreenColor()
     {
         int c = fAPIUI.getScreenColor();
-        __android_log_print(ANDROID_LOG_ERROR, "Faust", "getScreenColor() = %x", c);
+        __android_log_print(ANDROID_LOG_ERROR, "Faust", "getScreenColor() = %d", c);
         return c;
     }
 
@@ -470,7 +470,7 @@ float getCPULoad()
     return gGlobal->getCPULoad();
 }
 
-
+ /*
  * getScreenColor() -> c:int
  * Get the requested screen color c :
  * c <  0 : no screen color requested (keep regular UI)
