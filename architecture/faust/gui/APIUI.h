@@ -119,7 +119,12 @@ class APIUI : public PathUI, public Meta
                 } else if ((fCurrentColor == "green") && (fGreenReader == 0)) {
                     fGreenReader = new ZoneReader(zone, min, max);
                     fHasScreenControl = true;
-                } else if ((fCurrentColor == "red") && (fBlueReader == 0)) {
+                } else if ((fCurrentColor == "blue") && (fBlueReader == 0)) {
+                    fBlueReader = new ZoneReader(zone, min, max);
+                    fHasScreenControl = true;
+                } else if ((fCurrentColor == "white") && (fRedReader == 0) && (fGreenReader == 0) && (fBlueReader == 0)) {
+                    fRedReader = new ZoneReader(zone, min, max);
+                    fGreenReader = new ZoneReader(zone, min, max);
                     fBlueReader = new ZoneReader(zone, min, max);
                     fHasScreenControl = true;
                 } else {
@@ -361,9 +366,9 @@ class APIUI : public PathUI, public Meta
         int getScreenColor()
         {
             if (fHasScreenControl) {
-                int r = (fRedReader) ? fRedReader->getValue() : 127;
-                int g = (fGreenReader) ? fGreenReader->getValue() : 127;
-                int b = (fBlueReader) ? fBlueReader->getValue() : 127;
+                int r = (fRedReader) ? fRedReader->getValue() : 0;
+                int g = (fGreenReader) ? fGreenReader->getValue() : 0;
+                int b = (fBlueReader) ? fBlueReader->getValue() : 0;
                 return (r<<16) | (g<<8) | b;
             } else {
                 return -1;
