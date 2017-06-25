@@ -41,6 +41,8 @@ class ScalarCompiler : public Compiler
 {
   protected:
     property<string>            fCompileProperty;
+    property<string>            fSoundfileVariableProperty;     // variable associated to a soundfile
+   // property<bool>              fSoundfileVisitedProperty;     // variable associated to a soundfile
     property<string>            fVectorProperty;
     property<pair<string,string> >  fStaticInitProperty;        // property added to solve 20101208 kjetil bug
     property<pair<string,string> >  fInstanceInitProperty;      // property added to solve 20101208 kjetil bug
@@ -73,6 +75,7 @@ class ScalarCompiler : public Compiler
     virtual string      generateCode (Tree sig);
     virtual string      generateCacheCode(Tree sig, const string& exp) ;
     virtual string      forceCacheCode(Tree sig, const string& exp) ;
+    virtual string      getSoundfileVariable(Tree sig, Tree label);
 
     virtual string      generateVariableStore(Tree sig, const string& exp);
 
