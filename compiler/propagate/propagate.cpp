@@ -239,11 +239,11 @@ siglist propagate (Tree slotenv, Tree path, Tree box, const siglist&  lsig)
     return result;
 }
 
-// Apply sigFTZ() to all signals of a vector
+// Apply sigFTZExpansion() to all signals of a vector
 static siglist wrapWithFTZ(const siglist&  l1) 
 {
 	siglist l2;
-	for (auto x : l1) { l2.push_back(sigFTZ(x)); }
+	for (auto x : l1) { l2.push_back(sigFTZExpansion(x)); }
 	return l2;
 }
 

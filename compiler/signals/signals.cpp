@@ -443,7 +443,7 @@ bool verySimple(Tree exp)
 *****************************************************************************/
 
 // \(x).(select2(abs(x)<mmm, x, 0))
-Tree sigFTZ (Tree s)
+Tree sigFTZExpansion (Tree s)
 {
 	vector<Tree> vs;
 	vs.push_back(s);
