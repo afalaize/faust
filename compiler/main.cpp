@@ -172,7 +172,7 @@ bool            gInjectFlag     = false;        // inject an external source fil
 string          gInjectFile     = "";           // instead of a compiled dsp file
 
 // FTZ
-bool            gFTZFlag        = false;        // when true injects FTZ code in rec sig
+bool            gFTZFlag        = false;        // when true injects FTZ code in floating points rec signals
 
 //-- command line tools
 

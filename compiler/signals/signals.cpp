@@ -449,3 +449,8 @@ Tree sigFTZExpansion (Tree s)
 	vs.push_back(s);
 	return sigSelect2(sigLT(gAbsPrim->computeSigOutput(vs), sigReal(FLT_MIN)), s, sigReal(0.0));
 }
+
+Tree sigFTZ (Tree s)
+{
+	return tree(gFtzPrim->symbol(), s);
+}
