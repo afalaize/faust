@@ -171,6 +171,8 @@ bool            gInPlace        = false;        // add cache to input for correc
 bool            gInjectFlag     = false;        // inject an external source file into the architecture file
 string          gInjectFile     = "";           // instead of a compiled dsp file
 
+// FTZ
+bool            gFTZFlag        = false;        // when true injects FTZ code in rec sig
 
 //-- command line tools
 
@@ -401,6 +403,10 @@ bool process_cmdline(int argc, char* argv[])
             gExportDSP = true;
             i += 1;
 
+        } else if (isCmd(argv[i], "-ftz", "--flush-to-zero")) {
+            gFTZFlag = true;
+            i += 1;
+
         } else if (isCmd(argv[i], "-I", "--import-dir") && (i+1 < argc)) {
             if (strstr(argv[i+1], "http://") != 0) {
                 gImportDirList.push_back(argv[i+1]);
@@ -547,6 +553,7 @@ void printhelp()
     cout << "-e       \t--export-dsp export expanded DSP (all included libraries) \n";
     cout << "-inpl    \t--in-place generates code working when input and output buffers are the same (in scalar mode only) \n";
     cout << "-inj <f> \t--inject source file <f> into architecture file instead of compile a dsp file\n";
+  	cout << "-ftz     \t--flush-to-zero code added to recursive signals\n";
   	cout << "\nexample :\n";
 	cout << "---------\n";
 
